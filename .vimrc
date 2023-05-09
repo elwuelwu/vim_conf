@@ -23,6 +23,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'rhysd/vim-clang-format'
 Plug 'hashivim/vim-terraform'
+Plug 'zhaocai/GoldenView.Vim'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'airblade/vim-gitgutter'
 call plug#end()
@@ -88,6 +89,48 @@ let g:LanguageClient_diagnosticsList = 'Disabled'
 :  nmap <silent> df :call LanguageClient#textDocument_codeAction()<CR>
 :endfunction
 
+" Highlight trailing spaces
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+" highlight ExtraWhitespace ctermbg=red guibg=red
+" match ExtraWhitespace /\s\+$/
+" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+" autocmd BufWinLeave * call clearmatches()
+
+" 
+" let g:LanguageClient_serverCommands = {
+"   \ 'cpp': ['clangd', '-j=5', '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
+"   \ 'c': ['clangd', '-j=5',  '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
+"   \ 'python': ['pyls'],
+"   \ 'rust': ['rls'],
+"   \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+"   \       using LanguageServer;
+"   \       using Pkg;
+"   \       import StaticLint;
+"   \       import SymbolServer;
+"   \       env_path = dirname(Pkg.Types.Context().env.project_file);
+"   \       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+"   \       server.runlinter = true;
+"   \       run(server);
+"   \   ']
+"   \ }
+" let g:LanguageClient_diagnosticsList = 'Disabled'
+" 
+" :function Language_client_keymaps()
+" :  nmap <silent> gd :call LanguageClient#textDocument_definition()<cr>
+" :  nmap <silent> gh :call LanguageClient#textDocument_hover()<cr>
+" :  nmap <silent> gr :call LanguageClient#textDocument_references()<cr>
+" :  nmap <silent> gm :call LanguageClient_contextMenu()<CR>
+" :  nmap <silent> gn :call LanguageClient#textDocument_rename()<CR>
+" :  nmap <silent> dn :call LanguageClient#diagnosticsNext()<CR>
+" :  nmap <silent> dN :call LanguageClient#diagnosticsPrevious()<CR>
+" :  nmap <silent> df :call LanguageClient#textDocument_codeAction()<CR>
+" :endfunction
+" 
+"
+"
+
 :function Coc_keymaps()
 :  nmap <silent> gd <Plug>(coc-definition)
 :  nmap <silent> gy <Plug>(coc-type-definition)
@@ -107,13 +150,13 @@ let g:LanguageClient_diagnosticsList = 'Disabled'
 " julia> Pkg.add("SymbolServer")
 " julia> Pkg.add("StaticLint")
 
-let g:default_julia_version = '1.0'
+" let g:default_julia_version = '1.0'
 
 map <F12> :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 map F :NERDTreeFind<cr>
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :call Coc_keymaps()
-autocmd BufEnter *.{c,cpp,cc,s,h,jl} :call Language_client_keymaps()
+" autocmd BufEnter *.{c,cpp,cc,s,h,jl} :call Language_client_keymaps()
 
 nmap gs :Rg<cr>
 
@@ -125,6 +168,7 @@ nmap <left> :tabprevious<cr>
 autocmd FileType c,h,cpp ClangFormatAutoEnable
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+:set nofixendofline
 
 :highlight DiffAdd ctermfg=Green ctermbg=NONE guifg=#00ff37 guibg=#00ff37
 :highlight DiffDelete ctermfg=9 ctermbg=NONE guifg=#00ff37 guibg=#00ff37
