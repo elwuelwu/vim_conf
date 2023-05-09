@@ -28,9 +28,9 @@ Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " 80 characters line
-set colorcolumn=81
-execute "set colorcolumn=" . join(range(81,335), ',')
-highlight ColorColumn ctermbg=Black ctermfg=DarkRed
+" set colorcolumn=81
+" execute "set colorcolumn=" . join(range(81,335), ',')
+" highlight ColorColumn ctermbg=Black ctermfg=DarkRed
 
 
 
@@ -59,23 +59,23 @@ colorscheme codedark
 :set expandtab
 :set tabstop=2
 
-let g:LanguageClient_serverCommands = {
-  \ 'cpp': ['clangd', '-j=5', '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
-  \ 'c': ['clangd', '-j=5',  '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
-  \ 'python': ['pyls'],
-  \ 'rust': ['rls'],
-  \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-  \       using LanguageServer;
-  \       using Pkg;
-  \       import StaticLint;
-  \       import SymbolServer;
-  \       env_path = dirname(Pkg.Types.Context().env.project_file);
-  \       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-  \       server.runlinter = true;
-  \       run(server);
-  \   ']
-  \ }
-let g:LanguageClient_diagnosticsList = 'Disabled'
+" let g:LanguageClient_serverCommands = {
+"   \ 'cpp': ['clangd', '-j=5', '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
+"   \ 'c': ['clangd', '-j=5',  '-completion-style=detailed', '-background-index', '-all-scopes-completion', '--suggest-missing-includes'],
+"   \ 'python': ['pyls'],
+"   \ 'rust': ['rls'],
+"   \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+"   \       using LanguageServer;
+"   \       using Pkg;
+"   \       import StaticLint;
+"   \       import SymbolServer;
+"   \       env_path = dirname(Pkg.Types.Context().env.project_file);
+"   \       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+"   \       server.runlinter = true;
+"   \       run(server);
+"   \   ']
+"   \ }
+" let g:LanguageClient_diagnosticsList = 'Disabled'
 
 :function Language_client_keymaps()
 :  nmap <silent> gd :call LanguageClient#textDocument_definition()<cr>
